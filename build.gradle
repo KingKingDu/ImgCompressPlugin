@@ -27,3 +27,9 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+apply plugin: 'com.kingkingdu.imgcompressplugin'
+imgCompressOpt{
+    way="tinypng"
+    tinyKeys=["z862z2062RNqg9Tlx7x2S5DVmQZytvxp"]
+    test = true
+}
