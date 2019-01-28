@@ -6,14 +6,11 @@ public class CompressInfo{
     int compressedSize;
     String ratio;//压缩比例
     String path;
+    String outputPath //输出目录
     String md5;
 
-    CompressInfo(int preSize, int compressedSize, String path, String md5) {
-        this.preSize = preSize
-        this.compressedSize = compressedSize
+    CompressInfo(String path, String outputPath) {
         this.path = path
-        this.md5 = md5
-
-        ratio = compressedSize * 1.0F/preSize *100 +"%"
+        this.outputPath = outputPath
     }
 }
