@@ -10,10 +10,10 @@ public class CompressorFactory {
                 return new TinyCompressor()
                 break;
             case Constants.WAY_QUANT:
-                return new TinyCompressor()
+                return new PngquantCompressor()
                 break;
             case Constants.WAY_ZOPFLIP:
-                return new TinyCompressor()
+                return new ZopflipngCompressor()
                 break;
         }
     }

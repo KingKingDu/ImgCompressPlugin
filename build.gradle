@@ -29,7 +29,7 @@ task clean(type: Delete) {
 }
 apply plugin: 'com.kingkingdu.imgcompressplugin'
 imgCompressOpt{
-    way="tinypng"
+    way="zopflip"
     tinyKeys=["z862z2062RNqg9Tlx7x2S5DVmQZytvxp"]
-    test = false
+    test = true
 }
