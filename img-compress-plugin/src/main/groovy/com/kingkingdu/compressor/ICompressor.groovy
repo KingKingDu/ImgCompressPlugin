@@ -9,5 +9,5 @@ import org.gradle.api.Project
  */
 interface ICompressor {
 
-    void compress(Project rootProject, List<File> files, List<CompressInfo> compressInfoList,ImgCompressExtension config)
+    void compress(Project rootProject,List<CompressInfo> unCompressFileList,ImgCompressExtension config)
 }

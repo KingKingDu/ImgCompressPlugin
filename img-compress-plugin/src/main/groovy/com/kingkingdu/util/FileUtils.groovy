@@ -1,9 +1,9 @@
-package com.kingkingdu
+package com.kingkingdu.util
 
 import java.security.MessageDigest
 import java.text.DecimalFormat
 
-public class Utils {
+public class FileUtils {
 
     public static String generateMD5(File file) {
         MessageDigest digest = MessageDigest.getInstance("MD5")

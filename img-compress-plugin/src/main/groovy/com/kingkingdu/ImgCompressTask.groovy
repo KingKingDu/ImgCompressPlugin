@@ -2,19 +2,26 @@ package com.kingkingdu
 import com.android.build.gradle.AppPlugin
 import com.android.build.gradle.LibraryPlugin
 import com.android.build.gradle.api.BaseVariant
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.kingkingdu.CompressInfo
 import com.kingkingdu.ImgCompressExtension
 import com.kingkingdu.compressor.CompressorFactory
+import com.kingkingdu.util.FileUtils
 import com.kingkingdu.util.Logger
+import com.sun.org.apache.bcel.internal.generic.NEW
 import com.tinify.Source
+import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 import org.gradle.api.DefaultTask
 import org.gradle.api.DomainObjectCollection
 import org.gradle.api.Project
 import org.gradle.api.tasks.TaskAction
+import org.gradle.internal.impldep.com.google.api.client.json.Json
+import org.omg.CORBA.portable.InputStream
+import proguard.InputReader
 
 public class ImgCompressTask extends DefaultTask{
-    def android
     ImgCompressExtension config
     Logger log
     List<String> sizeDirList = ["原图500KB以上","原图200KB以上","原图100KB以上","原图50KB以上","原图20KB以上","原图20KB以下"]
@@ -22,12 +29,12 @@ public class ImgCompressTask extends DefaultTask{
         description = 'ImgCompressTask'
         group = 'imgCompress'
         config = project.imgCompressOpt
-        log = new Logger(project.getProject())
     }
 
 
     @TaskAction
     def run(){
+        log = Logger.getInstance(project.getProject())
         log.i("ImgCompressTask run")
 
         if (!project == project.getProject()){
@@ -36,7 +43,8 @@ public class ImgCompressTask extends DefaultTask{
         def imgDirectories = getSourcesDirs(project)
         def compressedList = getCompressedInfo()
         def unCompressFileList = getUnCompressFileList(imgDirectories,compressedList)
-//        CompressorFactory.getCompressor(config.way).compress(project,imgDirectories,compressedList,config)
+        CompressorFactory.getCompressor(config.way).compress(project,unCompressFileList,config)
+        updateCompressInfoList(unCompressFileList,compressedList)
     }
 
     /**
@@ -121,7 +129,9 @@ public class ImgCompressTask extends DefaultTask{
         else {
             try {
                 //将已压缩过的文件json解析-->list
-                def list = new JsonSlurper().parse(compressedListFile, "utf-8")
+
+                def json = new FileInputStream(compressedListFile).getText("utf-8")
+                def list =  new Gson().fromJson(json, new TypeToken<ArrayList<CompressInfo>>() {}.getType())
                 if(list instanceof ArrayList) {
                     compressedList = list
                 }
@@ -145,7 +155,7 @@ public class ImgCompressTask extends DefaultTask{
      * @param compressedList
      * @return
      */
-    List<File> getUnCompressFileList(List<File> imgDirectories,List<CompressInfo> compressedList){
+    List<CompressInfo> getUnCompressFileList(List<File> imgDirectories,List<CompressInfo> compressedList){
         List<CompressInfo> unCompressFileList = new ArrayList<>()
 
         dirFlag:for (File dir : imgDirectories){
@@ -172,10 +182,11 @@ public class ImgCompressTask extends DefaultTask{
                         }
                     }
                 }
-
+                def newMd5 = FileUtils.generateMD5(it)
                 //过滤已压缩文件
                 for (CompressInfo info : compressedList){
-                    if (info.path.equals(fileName) && info.md5.equals(md5)){
+                    log.i("origin : $newMd5   info.md5:${info.md5}  + ${info.md5.equals(newMd5)}")
+                    if (info.path.equals(it.getAbsolutePath()) && info.md5.equals(newMd5)){
                         log.i("ignore compressed >> " + it.getAbsolutePath())
                         continue fileFlag
                     }
@@ -186,7 +197,7 @@ public class ImgCompressTask extends DefaultTask{
                         log.i("ignore 9.png >> " + it.getAbsolutePath())
                         continue fileFlag
                     }
-                    unCompressFileList.add(new CompressInfo(it.getAbsolutePath(),getOutputPath(it)))
+                    unCompressFileList.add(new CompressInfo(-1,-1,"",it.getAbsolutePath(),getOutputPath(it),newMd5))
                     log.i("add file   >> " + it.getAbsolutePath())
                     log.i("outputPath >> " + getOutputPath(it))
 
@@ -203,8 +214,11 @@ public class ImgCompressTask extends DefaultTask{
 
     }
 
-
-
+    /**
+     * 根据测试配置确定输出路径
+     * @param originImg
+     * @return
+     */
     String getOutputPath(File originImg){
 
         if (config.test){
@@ -238,5 +252,26 @@ public class ImgCompressTask extends DefaultTask{
             return originImg.getAbsolutePath()
         }
 
+    }
+
+
+    def updateCompressInfoList(List<CompressInfo> newCompressedList,List<CompressInfo> compressedList){
+        for (CompressInfo newTinyPng : newCompressedList) {
+            def index = compressedList.path.indexOf(newTinyPng.path)
+            if (index >= 0) {
+                compressedList[index] = newTinyPng
+            } else {
+                compressedList.add(0, newTinyPng)
+            }
+        }
+        def jsonOutput = new JsonOutput()
+        def json = jsonOutput.toJson(compressedList)
+
+
+        def compressedListFile = new File("${project.projectDir}/imageCompressedInfo.json")
+        if (!compressedListFile.exists()) {
+            compressedListFile.createNewFile()
+        }
+        compressedListFile.write(jsonOutput.prettyPrint(json), "utf-8")
     }
 }

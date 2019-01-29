@@ -14,13 +14,25 @@ class Logger {
     private static final String INFO = "info:  ";
     private static final String WARN = "warn:  ";
     private static final String ERROR = "error: ";
-
+    private static Logger  log;
     private File file;
     private Writer writer;
 
     Logger(Project project) {
         file = new File(project.projectDir.absolutePath + File.separator + LOG_FILE_NAME)
         new PrintWriter(file).close()
+    }
+
+    public static Logger getInstance(Project project){
+        if (log == null){
+            synchronized (Logger.class){
+                if (log == null){
+                    log = new Logger(project)
+                }
+            }
+        }
+
+        return log
     }
 
     private def write(String logLevel, String msg) {
@@ -43,6 +55,7 @@ class Logger {
 
     def i(String msg) {
         write(INFO, msg)
+        println(msg)
     }
 
     def w(String msg) {
