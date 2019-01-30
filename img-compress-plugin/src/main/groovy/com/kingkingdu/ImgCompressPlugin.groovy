@@ -17,7 +17,7 @@ class ImgCompressPlugin implements Plugin<Project>{
         }
         project.extensions.create(Constants.EXT_OPT,ImgCompressExtension)
         project.task(type: ImgCompressTask, overwrite: true,"imgCompressTask") {
-            it.group = "imgCompress"
+            it.group = "image"
             it.description = "Compress  images"
         }
     }

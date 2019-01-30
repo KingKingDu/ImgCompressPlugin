@@ -8,7 +8,6 @@ import com.kingkingdu.util.PngquantUtil
 import org.gradle.api.Project
 
 public class PngquantCompressor implements ICompressor{
-    int keyIndex = 0
     def project;
     def compressInfoList = new ArrayList<CompressInfo>()
     ImgCompressExtension config

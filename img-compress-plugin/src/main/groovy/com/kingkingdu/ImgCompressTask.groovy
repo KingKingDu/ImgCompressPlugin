@@ -23,7 +23,7 @@ import java.nio.file.Files
 public class ImgCompressTask extends DefaultTask {
     ImgCompressExtension config
     Logger log
-    List<String> sizeDirList = ["原图500KB以上", "原图200KB以上", "原图100KB以上", "原图50KB以上", "原图20KB以上", "原图20KB以下"]
+    List<String> sizeDirList = [">500KB", "200~500KB", "100~200KB", "50~100KB", "20~50KB", "<20KB"]
 
     ImgCompressTask() {
         description = 'ImgCompressTask'
@@ -189,7 +189,8 @@ public class ImgCompressTask extends DefaultTask {
                 //过滤已压缩文件
                 for (CompressInfo info : compressedList) {
                     log.i("origin : $newMd5   info.md5:${info.md5}  + ${info.md5.equals(newMd5)}")
-                    if (info.path.equals(it.getAbsolutePath()) && info.md5.equals(newMd5)) {
+                    //md5校验
+                    if (info.md5.equals(newMd5)) {
                         log.i("ignore compressed >> " + it.getAbsolutePath())
                         continue fileFlag
                     }
@@ -267,8 +268,16 @@ public class ImgCompressTask extends DefaultTask {
      * @return
      */
     def updateCompressInfoList(List<CompressInfo> newCompressedList, List<CompressInfo> compressedList) {
+        //脱敏
+        String projectDir = project.projectDir.getAbsolutePath()
+        for (CompressInfo info:newCompressedList){
+            info.path = info.path.substring(projectDir.length(),info.path.length())
+            info.outputPath = info.outputPath.substring(projectDir.length(),info.outputPath.length())
+            println("updateCompressInfoList >> ${info.path}")
+            println("updateCompressInfoList >> ${info.outputPath}")
+        }
         for (CompressInfo newTinyPng : newCompressedList) {
-            def index = compressedList.path.indexOf(newTinyPng.path)
+            def index = compressedList.md5.indexOf(newTinyPng.md5)
             if (index >= 0) {
                 compressedList[index] = newTinyPng
             } else {
@@ -277,7 +286,6 @@ public class ImgCompressTask extends DefaultTask {
         }
         def jsonOutput = new JsonOutput()
         def json = jsonOutput.toJson(compressedList)
-
 
         def compressedListFile = new File("${project.projectDir}/imageCompressedInfo.json")
         if (!compressedListFile.exists()) {
