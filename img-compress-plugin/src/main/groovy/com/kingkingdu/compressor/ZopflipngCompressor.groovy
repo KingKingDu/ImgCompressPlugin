@@ -24,18 +24,12 @@ public class ZopflipngCompressor implements ICompressor{
         this.config = config
         log = Logger.getInstance(rootProject)
         ZopflipngUtil.copyZopflipng2BuildFolder(project)
-        log.i("type>>ZopflipngCompressor")
+        log.i("type>>ZopflipngCompressor init....")
         PngquantUtil.copyPngquant2BuildFolder(project)
         def zopflipng = ZopflipngUtil.getZopflipngFilePath(project)
         unCompressFileList.each { info ->
             File originFile = new File(info.path)
             String type = originFile.getAbsolutePath().substring(originFile.getAbsolutePath().indexOf("."))
-            String suffix = ""
-            log.i("type>>" + type)
-            if (type.equals(".png")){
-                suffix = ".png"
-            }
-
             long originalSize = originFile.length()
             Process process = new ProcessBuilder(zopflipng, "-y", "-m",info.path,info.outputPath).redirectErrorStream(true).start();
 
