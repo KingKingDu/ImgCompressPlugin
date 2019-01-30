@@ -43,7 +43,7 @@ public class ImgCompressTask extends DefaultTask{
         def imgDirectories = getSourcesDirs(project)
         def compressedList = getCompressedInfo()
         def unCompressFileList = getUnCompressFileList(imgDirectories,compressedList)
-        CompressorFactory.getCompressor(config.way).compress(project,unCompressFileList,config)
+        CompressorFactory.getCompressor(config.way,project).compress(project,unCompressFileList,config)
         updateCompressInfoList(unCompressFileList,compressedList)
     }
 
