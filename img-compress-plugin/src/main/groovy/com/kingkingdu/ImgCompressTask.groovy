@@ -296,11 +296,14 @@ public class ImgCompressTask extends DefaultTask {
             File origin = new File(info.path)
             String testPathName = new File(info.outputPath).parent +"/" + origin.getName()
             File copyFile = new File(testPathName)
+            if (copyFile.exists()){
+                copyFile.delete()
+            }
             log.i("copyToTestPath >>" + testPathName)
             try {
                 Files.copy(origin.toPath(),copyFile.toPath())
             } catch (Exception e){
-
+                log.i("copyToTestPath" + e.printStackTrace())
             }
 
         }
