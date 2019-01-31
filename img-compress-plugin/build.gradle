@@ -21,8 +21,8 @@ dependencies {
 
 
 //publish to local directory
-def versionName = "1.0.0"
-group "com.kingkingdu"
+def versionName = "1.0.4"
+group "com.kingkingdu.plugin"
 version versionName
 
 uploadArchives{ //当前项目可以发布到本地文件夹中
@@ -31,4 +31,15 @@ uploadArchives{ //当前项目可以发布到本地文件夹中
             repository(url: uri('./repo')) //定义本地maven仓库的地址
         }
     }
+}
+apply plugin: 'com.novoda.bintray-release'//添加
+
+//添加
+publish {
+    userOrg = 'kingkingdu'//bintray.com用户名
+    groupId = 'com.kingkingdu.plugin'//jcenter上的路径,跟maven的package对应
+    artifactId = 'img-compressor'//项目名称
+    publishVersion = versionName//版本号
+    desc = 'a android plugin for compress image'//描述
+    website = 'https://github.com/duking666/ImgCompressPlugin'//网站，最好有，不重要
 }

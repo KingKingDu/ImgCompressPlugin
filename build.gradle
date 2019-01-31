@@ -14,6 +14,7 @@ buildscript {
         classpath 'com.kingkingdu:img-compress-plugin:1.0.0'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
+        classpath 'com.novoda:bintray-release:+'
     }
 }
 
@@ -27,7 +28,7 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
-apply plugin: 'com.kingkingdu.imgcompressplugin'
+apply plugin: 'img-compressor'
 imgCompressOpt{
     way="zopflip"
     tinyKeys=["z862z2062RNqg9Tlx7x2S5DVmQZytvxp"]
