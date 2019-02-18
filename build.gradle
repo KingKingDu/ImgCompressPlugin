@@ -10,7 +10,8 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.0'
+        //插件本身的gradle.tool版本尽可能低,这样项目使用gradle一般就能向下兼容,不至于下载新的gradle版本
+        classpath 'com.android.tools.build:gradle:3.0.0'
         //jcenter模式
 //        classpath 'com.kingkingdu.plugin:img-compressor:1.0.7'
         //本地调试模式则使用
@@ -33,7 +34,7 @@ task clean(type: Delete) {
 }
 apply plugin: 'img-compressor'
 imgCompressOpt{
-    way="pngquant"
+    way="tinypng"//tinypng,pngquant,zopflip
     tinyKeys=["z862z2062RNqg9Tlx7x2S5DVmQZytvxp"]
     test = false
     whiteFiles=["add_favourite.png","ic_launcher_foreground.xml"]
