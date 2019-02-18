@@ -5,13 +5,13 @@ buildscript {
     repositories {
         google()
         jcenter()
-        maven{
-            url '/Users/kingkingdu/work/demo/ImgCompressPlugin/img-compress-plugin/repo/'
-        }
+//        maven{
+//            url '/Users/kingkingdu/work/demo/ImgCompressPlugin/img-compress-plugin/repo/'
+//        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.3.0'
-        classpath 'com.kingkingdu:img-compress-plugin:1.0.0'
+        classpath 'com.kingkingdu.plugin:img-compressor:1.0.6'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
         classpath 'com.novoda:bintray-release:+'
@@ -33,4 +33,5 @@ imgCompressOpt{
     way="zopflip"
     tinyKeys=["z862z2062RNqg9Tlx7x2S5DVmQZytvxp"]
     test = true
+    whiteFiles=["add_favourite.png","ic_launcher_foreground.xml"]
 }

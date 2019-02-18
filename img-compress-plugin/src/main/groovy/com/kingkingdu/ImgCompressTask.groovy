@@ -13,6 +13,7 @@ import com.sun.org.apache.bcel.internal.generic.NEW
 import com.tinify.Source
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
+import jdk.nashorn.internal.ir.WhileNode
 import org.gradle.api.DefaultTask
 import org.gradle.api.DomainObjectCollection
 import org.gradle.api.Project
@@ -90,23 +91,10 @@ public class ImgCompressTask extends DefaultTask {
                         res.eachDir {
                             //收集所有drawable目录及mipmap目录
                             if (it.directory && (it.name.startsWith("drawable") || it.name.startsWith("mipmap"))) {
-                                if (!config.whiteDirs.empty) {
-                                    config.whiteDirs.each { whiteDir ->
-                                        //剔除白名单目录
-                                        if (!whiteDir.equals(it)) {
-                                            if (!imgDirectories.contains(it)) {
-                                                log.i("add dir $it")
-                                                imgDirectories << it
-                                            }
-                                        }
-                                    }
-                                } else {
-                                    if (!imgDirectories.contains(it)) {
-                                        log.i("add dir $it")
-                                        imgDirectories << it
-                                    }
+                                if (!imgDirectories.contains(it)) {
+                                    log.i("add dir $it")
+                                    imgDirectories << it
                                 }
-                                // println("$it.absolutePath")
                             }
                         }
                     }
@@ -162,14 +150,14 @@ public class ImgCompressTask extends DefaultTask {
         dirFlag:
         for (File dir : imgDirectories) {
             //剔除白名单目录
-            if (!config.whiteDirs.empty) {
-                for (String whiteDir : config.whiteDirs) {
-                    if (whiteDir.equals(dir.getAbsolutePath())) {
-                        log.i("ignore whiteDirectory >> " + directory.getAbsolutePath())
-                        continue dirFlag
-                    }
-                }
-            }
+//            if (!config.whiteDirs.empty) {
+//                for (String whiteDir : config.whiteDirs) {
+//                    if (whiteDir.equals(dir.getAbsolutePath())) {
+//                        log.i("ignore whiteDirectory >> " + directory.getAbsolutePath())
+//                        continue dirFlag
+//                    }
+//                }
+//            }
 
             fileFlag:
             for (File it : dir.listFiles()) {
