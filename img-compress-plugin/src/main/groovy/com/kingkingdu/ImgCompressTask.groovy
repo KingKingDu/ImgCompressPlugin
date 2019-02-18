@@ -292,6 +292,7 @@ public class ImgCompressTask extends DefaultTask {
      * @return
      */
     def copyToTestPath(List<CompressInfo> newCompressedList){
+        if (!config.test) return
         newCompressedList.each  { info ->
             File origin = new File(info.path)
             String testPathName = new File(info.outputPath).parent +"/" + origin.getName()
