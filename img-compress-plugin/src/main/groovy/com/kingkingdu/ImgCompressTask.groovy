@@ -4,16 +4,10 @@ import com.android.build.gradle.LibraryPlugin
 import com.android.build.gradle.api.BaseVariant
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.kingkingdu.CompressInfo
-import com.kingkingdu.ImgCompressExtension
 import com.kingkingdu.compressor.CompressorFactory
 import com.kingkingdu.util.FileUtils
 import com.kingkingdu.util.Logger
-import com.sun.org.apache.bcel.internal.generic.NEW
-import com.tinify.Source
 import groovy.json.JsonOutput
-import groovy.json.JsonSlurper
-import jdk.nashorn.internal.ir.WhileNode
 import org.gradle.api.DefaultTask
 import org.gradle.api.DomainObjectCollection
 import org.gradle.api.Project
@@ -139,7 +133,7 @@ public class ImgCompressTask extends DefaultTask {
     }
 
     /**
-     * 获取待压缩的文件,过滤白名单目录及文件
+     * 获取待压缩的文件,过滤白名单目录及文件,过滤文件大小
      * @param imgDirectories
      * @param compressedList
      * @return
@@ -183,12 +177,19 @@ public class ImgCompressTask extends DefaultTask {
                         continue fileFlag
                     }
                 }
+                //过滤非jpg或png图片
                 if (fileName.endsWith(".jpg") || fileName.endsWith(".png")) {
                     //.9图剔除
                     if (fileName.contains(".9")) {
                         log.i("ignore 9.png >> " + it.getAbsolutePath())
                         continue fileFlag
                     }
+                    //过滤文件大小
+                    if (!(getPicSize(it) >= config.minSize)){
+                        log.i("ignore size < minSize  >> " + it.getAbsolutePath())
+                        continue fileFlag
+                    }
+
                     unCompressFileList.add(new CompressInfo(-1, -1, "", it.getAbsolutePath(), getOutputPath(it), newMd5))
                     log.i("add file   >> " + it.getAbsolutePath())
                     log.i("outputPath >> " + getOutputPath(it))
@@ -305,6 +306,18 @@ public class ImgCompressTask extends DefaultTask {
         }
 
 
+    }
+
+    /**
+     * 获取图片大小,单位kb
+     * @param file
+     * @return
+     */
+    int getPicSize(File file){
+        def fis = new FileInputStream(file)
+        def beforeSize = file == null ? 0 : fis.available()
+        if (fis != null ) fis.close()
+        return beforeSize/1024
     }
 
 }
