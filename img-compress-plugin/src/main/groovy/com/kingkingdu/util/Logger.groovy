@@ -60,10 +60,12 @@ class Logger {
 
     def w(String msg) {
         write(WARN, msg)
+        println(msg)
     }
 
     def e(String msg) {
         write(ERROR, msg)
+        println(msg)
     }
 
 }

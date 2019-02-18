@@ -2,9 +2,9 @@ package com.kingkingdu.compressor
 
 import com.kingkingdu.CompressInfo
 import com.kingkingdu.ImgCompressExtension
+import com.kingkingdu.ResultInfo
 import com.kingkingdu.util.FileUtils
 import com.kingkingdu.util.Logger
-import groovy.json.JsonOutput
 import org.gradle.api.Project
 import com.tinify.*
 public class TinyCompressor implements ICompressor{
@@ -18,7 +18,7 @@ public class TinyCompressor implements ICompressor{
     Logger log
 
     @Override
-    void compress(Project rootProject,List<CompressInfo> unCompressFileList,ImgCompressExtension config) {
+    void compress(Project rootProject, List<CompressInfo> unCompressFileList, ImgCompressExtension config, ResultInfo resultInfo) {
         this.rootProject = rootProject;
         this.compressInfoList = compressInfoList;
         this.config = config
@@ -28,6 +28,9 @@ public class TinyCompressor implements ICompressor{
             tryCompressSingleFile(it)
         }
         println("Task finish, compress ${unCompressFileList.size()} files, before total size: ${FileUtils.formetFileSize(beforeTotalSize)} after total size: ${FileUtils.formetFileSize(afterTotalSize)}")
+        resultInfo.compressedSize = unCompressFileList.size()
+        resultInfo.beforeSize = beforeTotalSize
+        resultInfo.afterSize = afterTotalSize
     }
 
     def tryCompressSingleFile(CompressInfo info){

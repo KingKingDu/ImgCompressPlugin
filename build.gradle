@@ -14,7 +14,7 @@ buildscript {
         //jcenter模式
 //        classpath 'com.kingkingdu.plugin:img-compressor:1.0.7'
         //本地调试模式则使用
-        classpath 'com.kingkingdu.plugin:img-compress-plugin:1.0.6'
+        classpath 'com.kingkingdu.plugin:img-compress-plugin:1.0.7'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
         classpath 'com.novoda:bintray-release:+'
@@ -33,7 +33,7 @@ task clean(type: Delete) {
 }
 apply plugin: 'img-compressor'
 imgCompressOpt{
-    way="zopflip"
+    way="pngquant"
     tinyKeys=["z862z2062RNqg9Tlx7x2S5DVmQZytvxp"]
     test = true
     whiteFiles=["add_favourite.png","ic_launcher_foreground.xml"]

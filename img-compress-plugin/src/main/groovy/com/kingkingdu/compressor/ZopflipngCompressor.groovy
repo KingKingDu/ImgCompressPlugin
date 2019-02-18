@@ -2,6 +2,7 @@ package com.kingkingdu.compressor
 
 import com.kingkingdu.CompressInfo
 import com.kingkingdu.ImgCompressExtension
+import com.kingkingdu.ResultInfo
 import com.kingkingdu.util.FileUtils
 import com.kingkingdu.util.Logger
 import com.kingkingdu.util.PngquantUtil
@@ -17,7 +18,7 @@ public class ZopflipngCompressor implements ICompressor{
     Logger log
 
     @Override
-    void compress(Project rootProject,List<CompressInfo> unCompressFileList,ImgCompressExtension config) {
+    void compress(Project rootProject, List<CompressInfo> unCompressFileList, ImgCompressExtension config, ResultInfo resultInfo) {
         this.project = rootProject
         this.compressInfoList = compressInfoList
         this.config = config
@@ -54,6 +55,9 @@ public class ZopflipngCompressor implements ICompressor{
         }
 
         log.i("Task finish, compress ${unCompressFileList.size()} files, before total size: ${FileUtils.formetFileSize(beforeTotalSize)} after total size: ${FileUtils.formetFileSize(afterTotalSize)}")
+        resultInfo.compressedSize = unCompressFileList.size()
+        resultInfo.beforeSize = beforeTotalSize
+        resultInfo.afterSize = afterTotalSize
     }
 
 

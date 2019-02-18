@@ -19,7 +19,7 @@ public class ImgCompressTask extends DefaultTask {
     ImgCompressExtension config
     Logger log
     List<String> sizeDirList = [">500KB", "200~500KB", "100~200KB", "50~100KB", "20~50KB", "<20KB"]
-
+    ResultInfo resultInfo = new ResultInfo()
     ImgCompressTask() {
         description = 'ImgCompressTask'
         group = 'imgCompress'
@@ -39,9 +39,12 @@ public class ImgCompressTask extends DefaultTask {
         def compressedList = getCompressedInfo()
         def unCompressFileList = getUnCompressFileList(imgDirectories, compressedList)
 
-        CompressorFactory.getCompressor(config.way, project).compress(project, unCompressFileList, config)
+        CompressorFactory.getCompressor(config.way, project).compress(project, unCompressFileList, config, resultInfo)
         copyToTestPath(unCompressFileList)
         updateCompressInfoList(unCompressFileList, compressedList)
+
+        log.i("Task finish, compress ${resultInfo.compressedSize} files, before total size: ${FileUtils.formetFileSize(resultInfo.beforeSize)}" +
+                " after total size: ${FileUtils.formetFileSize(resultInfo.afterSize)} save size: ${FileUtils.formetFileSize(resultInfo.beforeSize - resultInfo.afterSize)}  ")
     }
 
     /**
@@ -186,7 +189,7 @@ public class ImgCompressTask extends DefaultTask {
                     }
                     //过滤文件大小
                     if (!(getPicSize(it) >= config.minSize)){
-                        log.i("ignore size < minSize  >> " + it.getAbsolutePath())
+                        log.i("ignore size less than minSize  >> " + it.getAbsolutePath())
                         continue fileFlag
                     }
 

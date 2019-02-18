@@ -2,6 +2,7 @@ package com.kingkingdu.compressor
 
 import com.kingkingdu.CompressInfo
 import com.kingkingdu.ImgCompressExtension
+import com.kingkingdu.ResultInfo
 import org.gradle.api.Project
 
 /**
@@ -9,5 +10,5 @@ import org.gradle.api.Project
  */
 interface ICompressor {
 
-    void compress(Project rootProject,List<CompressInfo> unCompressFileList,ImgCompressExtension config)
+    void compress(Project rootProject, List<CompressInfo> unCompressFileList, ImgCompressExtension config, ResultInfo resultInfo)
 }
