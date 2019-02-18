@@ -109,7 +109,7 @@ public class ImgCompressTask extends DefaultTask {
     List<CompressInfo> getCompressedInfo() {
         //读取原先已压缩过的文件,如果压缩过则不再压缩
         def compressedList = new ArrayList<CompressInfo>()
-        def compressedListFile = new File("${project.projectDir}/imageCompressedInfo.json")
+        def compressedListFile = new File("${project.projectDir}/image-compressed-info.json")
         if (!compressedListFile.exists()) {
             compressedListFile.createNewFile()
         } else {
@@ -279,7 +279,7 @@ public class ImgCompressTask extends DefaultTask {
         def jsonOutput = new JsonOutput()
         def json = jsonOutput.toJson(compressedList)
 
-        def compressedListFile = new File("${project.projectDir}/imageCompressedInfo.json")
+        def compressedListFile = new File("${project.projectDir}/image-compressed-info.json")
         if (!compressedListFile.exists()) {
             compressedListFile.createNewFile()
         }

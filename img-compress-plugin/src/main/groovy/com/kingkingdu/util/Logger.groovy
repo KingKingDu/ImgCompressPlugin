@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat
  */
 class Logger {
 
-    private static final String LOG_FILE_NAME = "img_optimizer.log";
+    private static final String LOG_FILE_NAME = "img_compress.log";
     private static final String INFO = "info:  ";
     private static final String WARN = "warn:  ";
     private static final String ERROR = "error: ";
