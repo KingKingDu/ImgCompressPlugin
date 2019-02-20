@@ -56,7 +56,6 @@ public class TinyCompressor implements ICompressor{
             afterTotalSize += afterSize
             info.update(beforeSize,afterSize,FileUtils.generateMD5(new File(info.outputPath)))
             log.i("beforeSize: $beforeSizeStr -> afterSize: ${afterSizeStr} radio:${info.ratio}")
-            log.i("md5 before:${FileUtils.generateMD5(new File(info.path))}  after:${info.md5}")
         } catch (AccountException e) {
             println("AccountException: ${e.getMessage()}")
             if (config.tinyKeys.size() <= ++keyIndex){

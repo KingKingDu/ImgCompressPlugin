@@ -173,7 +173,7 @@ public class ImgCompressTask extends DefaultTask {
                 def newMd5 = FileUtils.generateMD5(it)
                 //过滤已压缩文件
                 for (CompressInfo info : compressedList) {
-                    log.i("origin : $newMd5   info.md5:${info.md5}  + ${info.md5.equals(newMd5)}")
+//                    log.i("origin : $newMd5   info.md5:${info.md5}  + ${info.md5.equals(newMd5)}")
                     //md5校验
                     if (info.md5.equals(newMd5)) {
                         log.i("ignore compressed >> " + it.getAbsolutePath())
