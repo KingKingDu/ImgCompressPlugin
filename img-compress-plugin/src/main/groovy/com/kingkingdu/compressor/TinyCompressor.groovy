@@ -27,10 +27,12 @@ public class TinyCompressor implements ICompressor{
         unCompressFileList.each {
             tryCompressSingleFile(it)
         }
-        println("Task finish, compress ${unCompressFileList.size()} files, before total size: ${FileUtils.formetFileSize(beforeTotalSize)} after total size: ${FileUtils.formetFileSize(afterTotalSize)}")
+//        println("Task finish, compress ${unCompressFileList.size()} files, before total size: ${FileUtils.formetFileSize(beforeTotalSize)} after total size: ${FileUtils.formetFileSize(afterTotalSize)}")
         resultInfo.compressedSize = unCompressFileList.size()
         resultInfo.beforeSize = beforeTotalSize
         resultInfo.afterSize = afterTotalSize
+        resultInfo.skipCount = 0
+
     }
 
     def tryCompressSingleFile(CompressInfo info){

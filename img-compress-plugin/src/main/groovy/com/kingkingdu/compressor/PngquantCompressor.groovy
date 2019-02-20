@@ -31,7 +31,7 @@ public class PngquantCompressor implements ICompressor{
             File originFile = new File(info.path)
             String type = originFile.getAbsolutePath().substring(originFile.getAbsolutePath().indexOf("."))
             String suffix = config.test?"(test)":""
-            log.i("type>>" + type)
+//            log.i("type>>" + type)
             if (type.equals(".png")){
                 suffix = config.test?"(test).png":".png"
             }
@@ -47,7 +47,7 @@ public class PngquantCompressor implements ICompressor{
                 error.append(line)
             }
             int exitCode = process.waitFor()
-            log.i("exitCode  ${exitCode}")
+//            log.i("exitCode  ${exitCode}")
             if (exitCode == 0) {
                 if (config.test){
                     //复制test文件到测试目录
@@ -63,7 +63,7 @@ public class PngquantCompressor implements ICompressor{
 
                 long optimizedSize = new File(info.outputPath).length()
                 float rate = 1.0f * (originalSize - optimizedSize) / originalSize * 100
-                log.i("Succeed! ${originalSize}B-->${optimizedSize}B, ${rate}% saved! ${info.outputPath}")
+                log.i("Succeed! ${FileUtils.formetFileSize(originalSize)}-->${FileUtils.formetFileSize(optimizedSize)}, ${rate}% saved! ${info.outputPath}")
                 beforeTotalSize += originalSize
                 afterTotalSize += optimizedSize
             } else if (exitCode == 98) {
@@ -75,10 +75,11 @@ public class PngquantCompressor implements ICompressor{
             }
         }
 
-        log.i("Task finish, compress ${unCompressFileList.size() - skipCount} files, before total size: ${FileUtils.formetFileSize(beforeTotalSize)} after total size: ${FileUtils.formetFileSize(afterTotalSize)}")
+//        log.i("Task finish, compress ${unCompressFileList.size() - skipCount} files, before total size: ${FileUtils.formetFileSize(beforeTotalSize)} after total size: ${FileUtils.formetFileSize(afterTotalSize)}")
         resultInfo.compressedSize = unCompressFileList.size()-skipCount
         resultInfo.beforeSize = beforeTotalSize
         resultInfo.afterSize = afterTotalSize
+        resultInfo.skipCount = skipCount
     }
 
 

@@ -43,7 +43,7 @@ public class ImgCompressTask extends DefaultTask {
         copyToTestPath(unCompressFileList)
         updateCompressInfoList(unCompressFileList, compressedList)
 
-        log.i("Task finish, compress ${resultInfo.compressedSize} files, before total size: ${FileUtils.formetFileSize(resultInfo.beforeSize)}" +
+        log.i("Task finish, compressed:${resultInfo.compressedSize} files  skip:${resultInfo.skipCount} Files  before total size: ${FileUtils.formetFileSize(resultInfo.beforeSize)}" +
                 " after total size: ${FileUtils.formetFileSize(resultInfo.afterSize)} save size: ${FileUtils.formetFileSize(resultInfo.beforeSize - resultInfo.afterSize)}  ")
     }
 
@@ -159,7 +159,7 @@ public class ImgCompressTask extends DefaultTask {
             fileFlag:
             for (File it : dir.listFiles()) {
                 String fileName = it.name
-                log.i("fileName ${fileName}")
+//                log.i("fileName ${fileName}")
 
                 //过滤白名单文件
                 if (!config.whiteFiles.empty) {
@@ -194,9 +194,7 @@ public class ImgCompressTask extends DefaultTask {
                     }
 
                     unCompressFileList.add(new CompressInfo(-1, -1, "", it.getAbsolutePath(), getOutputPath(it), newMd5))
-                    log.i("add file   >> " + it.getAbsolutePath())
-                    log.i("outputPath >> " + getOutputPath(it))
-
+                    log.i("add file  outputPath >> ${getOutputPath(it)}")
                 }
 
             }
@@ -265,8 +263,8 @@ public class ImgCompressTask extends DefaultTask {
         for (CompressInfo info:newCompressedList){
             info.path = info.path.substring(projectDir.length(),info.path.length())
             info.outputPath = info.outputPath.substring(projectDir.length(),info.outputPath.length())
-            println("updateCompressInfoList >> ${info.path}")
-            println("updateCompressInfoList >> ${info.outputPath}")
+//            println("updateCompressInfoList >> ${info.path}")
+//            println("updateCompressInfoList >> ${info.outputPath}")
         }
         for (CompressInfo newTinyPng : newCompressedList) {
             def index = compressedList.md5.indexOf(newTinyPng.md5)

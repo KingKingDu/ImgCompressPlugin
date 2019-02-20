@@ -16,6 +16,7 @@ public class ZopflipngCompressor implements ICompressor{
     def beforeTotalSize = 0
     def afterTotalSize = 0
     Logger log
+    def skipCount=0 //用于压缩后变大的情况
 
     @Override
     void compress(Project rootProject, List<CompressInfo> unCompressFileList, ImgCompressExtension config, ResultInfo resultInfo) {
@@ -44,20 +45,23 @@ public class ZopflipngCompressor implements ICompressor{
             if (exitCode == 0) {
                 long optimizedSize = new File(info.outputPath).length()
                 float rate = 1.0f * (originalSize - optimizedSize) / originalSize * 100
-                log.i("Succeed! ${originalSize}B-->${optimizedSize}B, ${rate}% saved! ${info.outputPath}")
+                log.i("Succeed! ${FileUtils.formetFileSize(originalSize)}-->${FileUtils.formetFileSize(optimizedSize)}, ${rate}% saved! ${info.outputPath}")
                 beforeTotalSize += originalSize
                 afterTotalSize += optimizedSize
             } else if (exitCode == 98) {
                 log.w("Skipped! ${info.outputPath}")
+                skipCount++
             } else {
                 log.e("Failed! ${info.outputPath}")
+                skipCount++
             }
         }
 
-        log.i("Task finish, compress ${unCompressFileList.size()} files, before total size: ${FileUtils.formetFileSize(beforeTotalSize)} after total size: ${FileUtils.formetFileSize(afterTotalSize)}")
+//        log.i("Task finish, compress ${unCompressFileList.size()} files, before total size: ${FileUtils.formetFileSize(beforeTotalSize)} after total size: ${FileUtils.formetFileSize(afterTotalSize)}")
         resultInfo.compressedSize = unCompressFileList.size()
         resultInfo.beforeSize = beforeTotalSize
         resultInfo.afterSize = afterTotalSize
+        resultInfo.skipCount = skipCount
     }
 
 
