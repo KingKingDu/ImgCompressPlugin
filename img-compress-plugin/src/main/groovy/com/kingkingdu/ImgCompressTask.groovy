@@ -229,7 +229,7 @@ public class ImgCompressTask extends DefaultTask {
             def originName = originImg.getName()
             def typeIndex = originName.indexOf(".")
             def testName = originName.substring(0,typeIndex) +"(test)" + originName.substring(typeIndex,originName.length())
-            log.i("testName >> " + testName)
+//            log.i("testName >> " + testName)
             if (beforeSize < 1024 * 20) {
                 outPutPath = "${project.projectDir}/ImageCompressTest/${sizeDirList[5]}/${testName}"
             } else if (beforeSize < 1024 * 50) {

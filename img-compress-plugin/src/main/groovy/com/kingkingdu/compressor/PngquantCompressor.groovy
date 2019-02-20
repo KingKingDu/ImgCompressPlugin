@@ -10,7 +10,7 @@ import org.gradle.api.Project
 
 import java.nio.file.Files
 
-public class PngquantCompressor implements ICompressor{
+class PngquantCompressor implements ICompressor{
     def project;
     def compressInfoList = new ArrayList<CompressInfo>()
     ImgCompressExtension config
@@ -90,7 +90,7 @@ public class PngquantCompressor implements ICompressor{
      * @return
      */
     def copyToTestPath(String orginTestPath,String outputPath){
-        log.i("copyToTestPath orginTestPath:${orginTestPath}  outputPath:${outputPath}")
+//        log.i("copyToTestPath originTestPath:${orginTestPath}  outputPath:${outputPath}")
         File origin = new File(orginTestPath)
         File copyFile = new File(outputPath)
         if (copyFile.exists()){
