@@ -36,7 +36,7 @@ apply plugin: 'img-compressor'
 imgCompressOpt{
     way="pngquant"//tinypng,pngquant,zopflip
     tinyKeys=["z862z2062RNqg9Tlx7x2S5DVmQZytvxp"]
-    test = true
-    whiteFiles=["add_favourite.png","ic_launcher_foreground.xml"]
+    test = false
+    whiteFiles=["test_pic2.png"]
     minSize=20
 }
