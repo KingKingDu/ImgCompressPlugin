@@ -39,7 +39,7 @@ imgCompressOpt{
 - `whiteFiles`:选填,白名单文件数组,不进行压缩
 - `minSize`:单位为KB,设置原图大于某个数值才触发压缩,0表示全部都压缩
 - `tinyKeys`:选填,仅在way="tinypng"情况下才需要
-#### gradle task点击指南
+
 
 ### 压缩效果
 
@@ -58,6 +58,10 @@ imgCompressOpt{
 ### 白名单的意义
 - 当进行图片压缩后发现有少量图片失真,则可以加入白名单,避免被压缩
 ### 测试模式
+- 适合场景:UI设计师可能需要协助对比压缩后的图片是否失真,但又没项目的代码权限,所以把压缩后的图片放置在一个目录整体打包,发给设计师审阅,当然最便捷的方式是Android studio自带的版本对比工具.
+- 当配置中test=true时,会把原图及压缩后的图输出到测试目录`(Project/ImageCompressTest)`,压缩后的图片命名为`xxxx(test).png`
+- 注意:当测试目录中只存在原图但不存在压缩后的图片时,表示图片已充分压缩,无需再压缩
+
 
 ### 最佳实践
 - 引入本插件,配置测试模式test=false,初次执行`imgCompressTask`后,查看log,会打印类似日志:
@@ -78,6 +82,7 @@ imgCompressOpt{
 - 答:会全部扫描,只要是application类型或者Android library类型都会被扫描到
 
 
+
 ### 支持的系统
 在macOS、windows10上测试通过
 
@@ -86,3 +91,4 @@ imgCompressOpt{
 ### License
 
 [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
+
