@@ -5,7 +5,7 @@
 
 
 ### 如何使用
-在`Project`的build.gradle文件中:
+第一步:在`Project`的build.gradle文件中:
 
 ```
 buildscript {
@@ -19,20 +19,24 @@ buildscript {
 }
 ...
 ...
-apply plugin: 'img-compressor'
 //图片压缩插件配置
+apply plugin: 'img-compressor'
 imgCompressOpt{
-    way="pngquant"//tinypng,pngquant,zopflip 3选1
-    test = false //测试模式是否开启
-    whiteFiles=["text_pic1.png","test_pic2.jpg"] //选填,白名单文件,不进行压缩
-    minSize=5 //单位为KB,设置原图大于某个数值才触发压缩,0表示全部都压缩
-    tinyKeys=["your key"] // 选填,仅在way="tinypng"情况下才需要
+    way="pngquant"
+    test = false
+    whiteFiles=["text_pic1.png","test_pic2.jpg"]
+    minSize=5
+    tinyKeys=["your key"]
 }
 
 ```
+第二步:引入后点击`sync now`,gradle配置完毕后会显示下图`imgCompressTask`,双击即可执行,等待压缩结果即可
+![gradle_guide](imgsource/gradle_guide.png)
+
+#### 配置信息
 - `way`:设置压缩的方式,支持3种常见的压缩,"tinypng","pngquant","zopflip" 3选1,压缩方式选择及压缩效果见下图
 - `test`:设置测试模式是否开启,false表示压缩后图片直接覆盖原图,true表示会把原图及压缩图输出到测试目录(Project/ImageCompressTest)
-- `whiteFiles`:白名单文件数组,不进行压缩
+- `whiteFiles`:选填,白名单文件数组,不进行压缩
 - `minSize`:单位为KB,设置原图大于某个数值才触发压缩,0表示全部都压缩
 - `tinyKeys`:选填,仅在way="tinypng"情况下才需要
 #### gradle task点击指南
@@ -42,6 +46,7 @@ imgCompressOpt{
 | 原图 | tinypng | pngquant | zopflip |
 | --- | --- | --- | --- |
 | 压缩类型 | 有损 | 有损 | 无损 |
+| 1.3M | 445KB | 542KB |903KB |
 | ![原图](imgsource/test_pic8.png) | ![tiny](imgsource/test_pic8(tiny).png) | ![pngquant](imgsource/test_pic8(pngquant).png) | ![zopflip](imgsource/test_pic8(zopflip).png) |
 
 
