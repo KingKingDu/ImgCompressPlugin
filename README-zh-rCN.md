@@ -40,7 +40,7 @@ imgCompressOpt{
 - `test`:设置测试模式是否开启,false表示压缩后图片直接覆盖原图,true表示会把原图及压缩图输出到测试目录(Project/ImageCompressTest)
 - `whiteFiles`:选填,白名单文件数组,不进行压缩
 - `minSize`:单位为KB,设置原图大于某个数值才触发压缩,0表示全部都压缩
-- `tinyKeys`:选填,仅在way="tinypng"情况下才需要
+- `tinyKeys`:选填,仅在way="tinypng"情况下才需要,[tinyKeys申请教程入口](https://github.com/duking666/ImgCompressPlugin/blob/master/Tinykey%20Apply%20Tutorial.md)
 
 
 ### 压缩效果
