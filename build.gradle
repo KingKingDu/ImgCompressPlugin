@@ -15,7 +15,7 @@ buildscript {
         //jcenter模式
 //        classpath 'com.kingkingdu.plugin:img-compressor:1.0.7'
         //本地调试模式则使用
-        classpath 'com.kingkingdu.plugin:img-compress-plugin:1.1.1'
+        classpath 'com.kingkingdu.plugin:img-compress-plugin:1.1.2'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
         classpath 'com.novoda:bintray-release:0.9'

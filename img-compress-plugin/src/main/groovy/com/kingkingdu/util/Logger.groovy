@@ -17,10 +17,13 @@ class Logger {
     private static Logger  log;
     private File file;
     private Writer writer;
+    private outPutLog = false
 
     Logger(Project project) {
-        file = new File(project.projectDir.absolutePath + File.separator + LOG_FILE_NAME)
-        new PrintWriter(file).close()
+        if (outPutLog){
+            file = new File(project.projectDir.absolutePath + File.separator + LOG_FILE_NAME)
+            new PrintWriter(file).close()
+        }
     }
 
     public static Logger getInstance(Project project){
@@ -36,6 +39,7 @@ class Logger {
     }
 
     private def write(String logLevel, String msg) {
+        if (!outPutLog) return
         writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream(file, true), "UTF-8")), true)
         try {
