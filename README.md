@@ -18,7 +18,7 @@ buildscript {
     }
     dependencies {
         ...
-        classpath 'com.kingkingdu.plugin:img-compressor:版本号'
+        classpath 'com.kingkingdu.plugin:img-compressor:version'
     }
 }
 ...
