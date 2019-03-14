@@ -45,6 +45,7 @@ public class ZopflipngCompressor implements ICompressor{
             if (exitCode == 0) {
                 long optimizedSize = new File(info.outputPath).length()
                 float rate = 1.0f * (originalSize - optimizedSize) / originalSize * 100
+                info.update(originalSize,optimizedSize,FileUtils.generateMD5(new File(info.outputPath)))
                 log.i("Succeed! ${FileUtils.formetFileSize(originalSize)}-->${FileUtils.formetFileSize(optimizedSize)}, ${rate}% saved! ${info.outputPath}")
                 beforeTotalSize += originalSize
                 afterTotalSize += optimizedSize

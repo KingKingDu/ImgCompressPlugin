@@ -21,7 +21,7 @@ dependencies {
 
 
 //publish to local directory
-def versionName = "1.1.2"
+def versionName = "1.1.3"
 group "com.kingkingdu.plugin"
 version versionName
 

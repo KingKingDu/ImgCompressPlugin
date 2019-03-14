@@ -13,8 +13,8 @@ public class TinyCompressor implements ICompressor{
     def compressInfoList = new ArrayList<CompressInfo>()
     boolean accountError = false
     ImgCompressExtension config;
-    def beforeTotalSize = 0
-    def afterTotalSize = 0
+    long beforeTotalSize = 0
+    long afterTotalSize = 0
     Logger log
 
     @Override
