@@ -18,7 +18,7 @@ import java.nio.file.Files
 public class ImgCompressTask extends DefaultTask {
     ImgCompressExtension config
     Logger log
-    List<String> sizeDirList = ["more500KB", "200~500KB", "100~200KB", "50~100KB", "20~50KB", "less20KB"]
+    List<String> sizeDirList = ["greater500KB", "200~500KB", "100~200KB", "50~100KB", "20~50KB", "less20KB"]
     ResultInfo resultInfo = new ResultInfo()
     ImgCompressTask() {
         description = 'ImgCompressTask'
