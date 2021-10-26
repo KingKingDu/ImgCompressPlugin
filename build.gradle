@@ -8,12 +8,13 @@ buildscript {
         maven{
             url '/Users/kingkingdu/work/demo/ImgCompressPlugin/img-compress-plugin/repo/'
         }
+        mavenCentral()
     }
     dependencies {
         //插件本身的gradle.tool版本尽可能低,这样项目使用gradle一般就能向下兼容,不至于下载新的gradle版本
         classpath 'com.android.tools.build:gradle:3.0.0'
-        //jcenter模式
-        classpath 'com.kingkingdu.plugin:img-compressor:1.1.4'
+        //mavenCentral模式
+        classpath 'io.github.duking666:ImgCompressPlugin:1.1.5'
         //本地调试模式则使用
 //        classpath 'com.kingkingdu.plugin:img-compress-plugin:1.1.3'
         // NOTE: Do not place your application dependencies here; they belong
@@ -26,6 +27,7 @@ allprojects {
     repositories {
         google()
         jcenter()
+        mavenCentral()
     }
 }
 
