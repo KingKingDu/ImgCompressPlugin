@@ -7,6 +7,7 @@ if (project.hasProperty("android")) { // Android libraries
     task javadoc(type: Javadoc) {
         // https://github.com/novoda/bintray-release/issues/71
         excludes = ['**/*.kt'] // < ---- Exclude all kotlin files from javadoc file.
+        source = android.sourceSets.main.java.srcDirs
         classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
         options.encoding = "utf-8"
         options.charSet = "utf-8"
@@ -14,7 +15,7 @@ if (project.hasProperty("android")) { // Android libraries
 } else { // Java libraries
     task sourcesJar(type: Jar, dependsOn: classes) {
         classifier = 'sources'
-        from javadoc.destinationDir
+        from sourceSets.main.allSource
     }
 }
 javadoc {
@@ -36,9 +37,8 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
     from javadoc.destinationDir
 }
 
-// add javadoc/source jar tasks as artifacts,mavenCentral会校验3者都要存在才能发布
+// add javadoc/source jar tasks as artifacts
 artifacts {
-    archives jar
     archives javadocJar
     archives sourcesJar
 }
@@ -52,7 +52,7 @@ properties.load(project.rootProject.file('local.properties').newDataInputStream(
 def ossrhUsername = properties.getProperty("ossrhUsername")
 def ossrhPassword = properties.getProperty("ossrhPassword")
 
-def PUBLISH_GROUP_ID = publishedGroupId
+def PUBLISH_GROUP_ID = publishedGroupId //这里可以不是直接申请时候的groupId只要开头是就可以
 
 def PUBLISH_ARTIFACT_ID = artifact
 
@@ -69,7 +69,9 @@ uploadArchives {
         mavenDeployer {
 
             beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
+            //debug模式下配置为本地仓库
+//            def repoURL = "file:///" + rootDir + "/Repo"
+//            repository(url: repoURL)
             repository(url: "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/") {
                 authentication(userName: ossrhUsername, password: ossrhPassword)
             }

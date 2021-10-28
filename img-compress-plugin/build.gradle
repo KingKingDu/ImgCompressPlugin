@@ -15,12 +15,13 @@ configurations {
 dependencies {
     implementation gradleApi()
     implementation localGroovy()
-    compileOnly 'com.android.tools.build:gradle:3.0.0'
+    compileOnly 'com.android.tools.build:gradle:4.1.3'
+    implementation 'com.tinify:tinify:1.3.1'
 }
 ext {
     artifact = 'ImgCompressPlugin'
     libraryName = 'ImgCompressPlugin For Android'
     libraryDescription = 'An Android gradle plugin that scans the resource directory in the project and performs batch image compression.'
-    libraryVersion = '1.1.5'
+    libraryVersion = '1.2.0'
 }
 apply from: '../maven-publish.gradle'

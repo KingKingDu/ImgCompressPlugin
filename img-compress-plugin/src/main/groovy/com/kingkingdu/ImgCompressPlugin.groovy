@@ -16,11 +16,9 @@ class ImgCompressPlugin implements Plugin<Project>{
             throw new IllegalArgumentException("img-compress-plugin must works on project level gradle")
         }
         project.extensions.create(Constants.EXT_OPT,ImgCompressExtension)
-        project.task(type: ImgCompressTask, overwrite: true,"imgCompressTask") {
+        project.tasks.create(Constants.TASK_NAME,ImgCompressTask) {
             it.group = "image"
             it.description = "Compress  images"
         }
     }
-
-
 }
