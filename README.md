@@ -1,4 +1,4 @@
-[![Download](https://img.shields.io/badge/download-latestversion-blue.svg)](https://bintray.com/kingkingdu/maven/img-compressor/_latestVersion) [![License](https://img.shields.io/badge/License-Apache%202.0-orange.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
+[![Download](https://img.shields.io/badge/download-latestversion-blue.svg)](https://search.maven.org/search?q=duking666) [![License](https://img.shields.io/badge/License-Apache%202.0-orange.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 [中文版](README-zh-rCN.md)
 
@@ -14,11 +14,11 @@ Step 1: in the `project`'s build.gradle file:
 ```
 buildscript {
     repositories {
-        jcenter()
+        mavenCentral()
     }
     dependencies {
         ...
-        classpath 'com.kingkingdu.plugin:img-compressor:version'
+        classpath 'io.github.duking666:ImgCompressPlugin:1.2.0'
     }
 }
 ...
