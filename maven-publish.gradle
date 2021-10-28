@@ -70,6 +70,9 @@ uploadArchives {
 
             beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
+            //debug模式下配置为本地仓库
+//            def repoURL = "file:///" + rootDir + "/Repo"
+//            repository(url: repoURL)
             repository(url: "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/") {
                 authentication(userName: ossrhUsername, password: ossrhPassword)
             }
