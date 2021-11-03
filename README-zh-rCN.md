@@ -16,7 +16,7 @@ buildscript {
     }
     dependencies {
         ...
-        classpath 'io.github.duking666:ImgCompressPlugin:1.2.0'
+        classpath 'io.github.duking666:ImgCompressPlugin:1.2.1'
     }
 }
 ...
